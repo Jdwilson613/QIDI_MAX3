@@ -130,6 +130,9 @@ extern float printer_caselight_value;
 //4.3.7 CLL 防止预览图界面卡死
 extern bool jump_to_print;
 
+int load_target; // CLL 此变量用于记录进退料时选择的温度。
+bool load_mode; // CLL 此变量用于记录处于进料或退料状态。
+
 void parse_cmd_msg_from_tjc_screen(char *cmd) {
     event_id = cmd[0];
     MKSLOG_BLUE("#########################%s", cmd);
@@ -977,12 +980,14 @@ void tjc_event_clicked_handler(int page_id, int widget_id, int type_id) {
         case TJC_PAGE_PRINT_FILAMENT_RETRACT:
             printer_idle_timeout_state = "Printing";
             page_print_filament_extrude_restract_button = true;
-            start_retract();
+            // start_retract();
+            send_gcode("M603\n");
             break;
 
         case TJC_PAGE_PRINT_FILAMENT_EXTRUDE:
             printer_idle_timeout_state = "Printing";
             page_print_filament_extrude_restract_button = true;
+            set_print_filament_dist(50);
             start_extrude();
             break;
 
@@ -999,17 +1004,17 @@ void tjc_event_clicked_handler(int page_id, int widget_id, int type_id) {
             break;
 
         case TJC_PAGE_PRINT_FILAMENT_UNLOAD:
-            send_cmd_pic(tty_fd, "pre_unload.b[0]", "438");
-            page_to(TJC_PAGE_PRE_UNLOAD);
-            send_cmd_picc(tty_fd, "b0", "438");
-            send_cmd_picc2(tty_fd, "b0", "439");
+            if (printer_print_stats_state == "paused") {
+                load_mode = false;
+                page_to(TJC_PAGE_PRE_HEATING_1);
+            }
             break;
             
         case TJC_PAGE_PRINT_FILAMENT_LOAD:
-            printer_idle_timeout_state = "Printing";
-            filament_load();
-            send_cmd_pic(tty_fd, "loading.b[0]", "432");
-            page_to(TJC_PAGE_LOADING);
+            if (printer_print_stats_state == "paused") {
+                load_mode = true;
+                page_to(TJC_PAGE_PRE_HEATING_1);
+            }
             break;
 
         default:
@@ -1261,35 +1266,14 @@ void tjc_event_clicked_handler(int page_id, int widget_id, int type_id) {
         case TJC_PAGE_FILAMENT_UNLOAD:
             //3.1.0 退料前解锁电机
             move_motors_off();
-            //2023.4.22-1 修改退料流程
-            /*
-            if ((printer_extruder_temperature >= (printer_extruder_target - 5))&&(printer_extruder_temperature <= (printer_extruder_target + 5))) {
-                page_to(TJC_PAGE_FILAMENT_POP_4);
-                //4.3.5 CLL 修复断料检测与退料冲突bug
-                if (filament_switch_sensor_fila_enabled == true) {
-                    previous_filament_sensor_state = true;
-                    set_filament_sensor();
-                }
-            }else {
-                page_to(TJC_PAGE_FILAMENT_POP);
-            }
-            page_filament_unload_button = true;
-            // filament_unload();
-            if (page_filament_unload_button == true) {
-                page_filament_unload_button = false;
-            }
-            */
-            send_cmd_pic(tty_fd, "pre_unload.b[0]", "433");
-            page_to(TJC_PAGE_PRE_UNLOAD);
-            send_cmd_picc(tty_fd, "b0", "433");
-            send_cmd_picc2(tty_fd, "b0", "434");
+            load_mode = false;
+            page_to(TJC_PAGE_PRE_HEATING_1);
             break;
 
         case TJC_PAGE_FILAMENT_LOAD:
-            printer_idle_timeout_state = "Printing";
-            filament_load();
-            send_cmd_pic(tty_fd, "loading.b[0]", "390");
-            page_to(TJC_PAGE_LOADING);
+            move_motors_off();
+            load_mode = true;
+            page_to(TJC_PAGE_PRE_HEATING_1);
             break;
 
         case TJC_PAGE_FILAMENT_BTN_RETRACT:
@@ -3495,12 +3479,68 @@ void tjc_event_clicked_handler(int page_id, int widget_id, int type_id) {
         case TJC_PAGE_LOAD_FINISH_RETRY:
             printer_idle_timeout_state = "Printing";
             filament_load();
-            if (printer_print_stats_state == "paused") {
-                send_cmd_pic(tty_fd, "loading.b[0]", "432");
-            } else {
-                send_cmd_pic(tty_fd, "loading.b[0]", "390");
-            }
             page_to(TJC_PAGE_LOADING);
+            break;
+        
+        default:
+            break;
+        }
+        break;
+
+    case TJC_PAGE_PRE_HEATING_1:
+        switch (widget_id)
+        {
+        case TJC_PAGE_PRE_HEATING_1_SET_1:
+            load_target = 220;
+            if (load_mode == true) {
+                page_to(TJC_PAGE_PRE_LOAD);
+            } else {
+                page_to(TJC_PAGE_PRE_UNLOAD);
+            }
+            break;
+
+        case TJC_PAGE_PRE_HEATING_1_SET_2:
+            load_target = 250;
+            if (load_mode == true) {
+                page_to(TJC_PAGE_PRE_LOAD);
+            } else {
+                page_to(TJC_PAGE_PRE_UNLOAD);
+            }
+            break;
+
+        case TJC_PAGE_PRE_HEAITNG_1_SET_3:
+            load_target = 300;
+            if (load_mode == true) {
+                page_to(TJC_PAGE_PRE_LOAD);
+            } else {
+                page_to(TJC_PAGE_PRE_UNLOAD);
+            }
+            break;
+
+        case TJC_PAGE_PRE_HEATING_1_BACK:
+            if (printer_print_stats_state == "paused") {
+                page_to(TJC_PAGE_PRINT_FILAMENT);
+            } else {
+                page_to(TJC_PAGE_FILAMENT);
+            }
+            break;
+            
+        default:
+            break;
+        }
+        break;
+
+    case TJC_PAGE_PRE_LOAD:
+        switch (widget_id)
+        {
+        case TJC_PAGE_PRE_LOAD_NEXT:
+            printer_idle_timeout_state = "Printing";
+            filament_load();
+            page_to(TJC_PAGE_PRE_HEATING_2);
+            break;
+
+        case TJC_PAGE_PRE_LOAD_BACK:
+            page_to(TJC_PAGE_PRE_HEATING_1);
             break;
         
         default:
@@ -3514,12 +3554,11 @@ void tjc_event_clicked_handler(int page_id, int widget_id, int type_id) {
         case TJC_PAGE_PRE_UNLOAD_NEXT:
             printer_idle_timeout_state = "Printing";
             filament_unload();
-            if (printer_print_stats_state == "paused") {
-                send_cmd_pic(tty_fd, "unloading.b[0]", "432");
-            } else {
-                send_cmd_pic(tty_fd, "unloading.b[0]", "390");
-            }
-            page_to(TJC_PAGE_UNLOADING);
+            page_to(TJC_PAGE_PRE_HEATING_2);
+            break;
+
+        case TJC_PAGE_PRE_LOAD_BACK:
+            page_to(TJC_PAGE_PRE_HEATING_1);
             break;
         
         default:
@@ -3553,13 +3592,8 @@ void tjc_event_clicked_handler(int page_id, int widget_id, int type_id) {
 
         case TJC_PAGE_UNLOAD_FINISH_RELOAD:
             printer_idle_timeout_state = "Printing";
-            filament_load();
-            if (printer_print_stats_state == "paused") {
-                send_cmd_pic(tty_fd, "loading.b[0]", "432");
-            } else {
-                send_cmd_pic(tty_fd, "loading.b[0]", "390");
-            }
-            page_to(TJC_PAGE_LOADING);
+            load_mode = true;
+            page_to(TJC_PAGE_PRE_HEATING_1);
             break;
         
         default:

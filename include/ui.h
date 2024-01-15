@@ -681,39 +681,52 @@
 #define TJC_PAGE_PREVIEW_POP_2               115
 #define TJC_PAGE_PREVIEW_POP_YES             0x00
 //4.3.4 CLL 耗材确认弹窗新增不再提示按钮
-#define TJC_PAGE_PREVIEW_POP_NO_POP        0x01
+#define TJC_PAGE_PREVIEW_POP_NO_POP          0x01
 
 //4.3.6 CLL 新增息屏功能
-#define TJC_PAGE_SCREEN_SLEEP              116
-#define TJC_PAGE_SCREEN_SLEEP_ENTER        0x00
-#define TJC_PAGE_SCREEN_SLEEP_EXIT         0x01
+#define TJC_PAGE_SCREEN_SLEEP                116
+#define TJC_PAGE_SCREEN_SLEEP_ENTER          0x00
+#define TJC_PAGE_SCREEN_SLEEP_EXIT           0x01
 
 //4.3.7 CLL 新增恢复出厂设置按钮             
-#define TJC_PAGE_RESTORE_CONFIG            117
-#define TJC_PAGE_RESTORE_CONFIG_YES        0x00
-#define TJC_PAGE_RESTORE_CONFIG_NO         0x01
+#define TJC_PAGE_RESTORE_CONFIG              117
+#define TJC_PAGE_RESTORE_CONFIG_YES          0x00
+#define TJC_PAGE_RESTORE_CONFIG_NO           0x01
 
-#define TJC_PAGE_RESTORING                 118
+#define TJC_PAGE_RESTORING                   118
 
 //4.3.10 CLL 新增输出日志文件功能
-#define TJC_PAGE_PRINT_LOG_S               119
-#define TJC_PAGE_PRINT_LOG_F               120
-#define TJC_PAGE_PRINT_LOG_YES             0x00
+#define TJC_PAGE_PRINT_LOG_S                 119
+#define TJC_PAGE_PRINT_LOG_F                 120
+#define TJC_PAGE_PRINT_LOG_YES               0x00
 
 // CLL 新增进料功能
-#define TJC_PAGE_LOADING                   121
+#define TJC_PAGE_PRE_HEATING_2               121
 
-#define TJC_PAGE_LOAD_FINISH              122
-#define TJC_PAGE_LOAD_FINISH_YES          0x00
-#define TJC_PAGE_LOAD_FINISH_RETRY        0x01
+#define TJC_PAGE_LOAD_FINISH                 122
+#define TJC_PAGE_LOAD_FINISH_YES             0x00
+#define TJC_PAGE_LOAD_FINISH_RETRY           0x01
 
-#define TJC_PAGE_PRE_UNLOAD               123
-#define TJC_PAGE_PRE_UNLOAD_NEXT          0x00
+#define TJC_PAGE_PRE_UNLOAD                  123
+#define TJC_PAGE_PRE_UNLOAD_NEXT             0x00
+#define TJC_PAGE_PRE_UNLOAD_BACK             0x01
 
-#define TJC_PAGE_MEMORY_WARNING           124
-#define TJC_PAGE_MEMORY_WARNING_YES       0x00
+#define TJC_PAGE_MEMORY_WARNING              124
+#define TJC_PAGE_MEMORY_WARNING_YES          0x00
 
-#define TJC_PAGE_UPDATING                 125
+#define TJC_PAGE_UPDATING                    125
+
+#define TJC_PAGE_PRE_LOAD                    126
+#define TJC_PAGE_PRE_LOAD_NEXT               0x00
+#define TJC_PAGE_PRE_LOAD_BACK               0x01
+
+#define TJC_PAGE_LOADING                     127
+
+#define TJC_PAGE_PRE_HEATING_1               128
+#define TJC_PAGE_PRE_HEATING_1_SET_1         0x00
+#define TJC_PAGE_PRE_HEATING_1_SET_2         0x01
+#define TJC_PAGE_PRE_HEAITNG_1_SET_3         0x02
+#define TJC_PAGE_PRE_HEATING_1_BACK          0x04
 
 #endif
 
