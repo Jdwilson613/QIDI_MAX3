@@ -12,8 +12,6 @@ int mks_heater_bed_target;
 int mks_hot_target;
 std::string mks_babystep_value;
 std::string mks_version_soc;
-std::string mks_version_mcu;
-std::string mks_version_ui;
 
 // webhooks
 std::string printer_webhooks_state;             
@@ -500,14 +498,14 @@ void parse_subscribe_objects_status(nlohmann::json status) {
         parse_idle_timeout(status["idle_timeout"]);
     }
     if (status["bed_mesh"] != nlohmann::detail::value_t::null) {
-        std::cout << status["bed_mesh"] << std::endl;
+        // TODO：不想打印的信息
+        // std::cout << status["bed_mesh"] << std::endl;
         parse_bed_mesh(status["bed_mesh"]);
         //4.3.3 CLL 修改调平点显示至多为64个
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-        //for (int i = 0; i < 4; i++) {
-        //    for (int j = 0; j < 4; j++) {
-                std::cout << "############# Points :" << i << ", " << j << " " << printer_bed_mesh_profiles_mks_points[i][j] << std::endl;
+                // TODO：不显示打印的点坐标和差值
+                // std::cout << "############# Points :" << i << ", " << j << " " << printer_bed_mesh_profiles_mks_points[i][j] << std::endl;
             }
         }
     }

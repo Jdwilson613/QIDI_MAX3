@@ -22,4 +22,5 @@ void get_parenet_dir_files_list();
 //3.1.0 CLL 使网页打印显示预览图
 void parse_file_estimated_time_send(nlohmann::json response);
 
+int output_imgdata(std::string thumbpath, int size);
 #endif

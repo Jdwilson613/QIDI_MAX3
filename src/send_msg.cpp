@@ -1,6 +1,7 @@
 #include "../include/mks_log.h"
 #include "../include/send_msg.h"
 #include "../include/MakerbaseSerial.h"
+#include "../include/event.h"
 
 extern int copy_fd;
 
@@ -444,12 +445,6 @@ void send_cmd_write_end(int fd) {
 void send_cmd_cp_image(int fd, std::string obj, std::string image) {
     send_cmd_write(fd, obj);
     write(fd, image.data(), image.length());
-    // MKSLOG_RED("写入图片");
-    /*
-    for (int i = 0; i < image.length(); i++) {
-        send_cmd_byte_data(fd, static_cast<char>(image[i]));
-    }
-    */
     send_cmd_write_end(fd);
 }
 
@@ -471,8 +466,8 @@ void send_cmd_txt_end(int fd) {
 
 void send_cmd_txt_plus(int fd, std::string obj1, std::string obj2, std::string obj3) {
     std::string cmd = obj1 + ".txt=" + obj2 + ".txt+" + obj3 + ".txt\xff\xff\xff";
-    // MKSLOG_YELLOW("%s", cmd.data());
     write(fd, cmd.data(), cmd.length());
+    send_cmd_write_end(fd);
 }
 
 void send_cmd_download(int fd, int filesize) {

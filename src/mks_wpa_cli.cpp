@@ -965,8 +965,7 @@ int mks_wpa_cli_open_connection() {
 }
 
 int mks_wpa_cli_close_connection() {
-    wpa_ctrl_close(ctrl_conn);
-    // wpa_ctrl_close(mon_conn);       // 关闭监听
+    wpa_ctrl_close(ctrl_conn);       // 关闭监听
     ctrl_conn = NULL;
     mks_wpa_cli_connected = false;
     MKSLOG_RED("断开wpa connection");

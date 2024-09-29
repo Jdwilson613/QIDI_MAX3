@@ -1,20 +1,10 @@
 #ifndef UI_H
 #define UI_H
 
-#define TJC_5
-
-#define XINDI_PLUS  1
-// #define XINDI_MAX   0
-
-#ifdef TJC_5
-
+//所有页面的下方跳转按钮的发送比特均一致
 #define TJC_PAGE_OPEN_LANGUAGE              0
 #define TJC_PAGE_OPEN_LANGUAGE_NEXT         0x02
 #define TJC_PAGE_OPEN_LANGUAGE_SKIP         0x09
-
-#define TJC_PAGE_OPEN_LEVEL_1               1
-#define TJC_PAGE_OPEN_LEVEL_1_PREVIOUS      0x02
-#define TJC_PAGE_OPEN_LEVEL_1_NEXT          0x03
 
 #define TJC_PAGE_OPEN_LEVELINIT             2
 
@@ -22,7 +12,7 @@
 #define TJC_PAGE_OPEN_LEVEL_001             0x03
 #define TJC_PAGE_OPEN_LEVEL_005             0x04
 #define TJC_PAGE_OPEN_LEVEL_01              0x05
-#define TJC_PAGE_OPEN_LEVEL__1               0x06
+#define TJC_PAGE_OPEN_LEVEL__1              0x06
 #define TJC_PAGE_OPEN_LEVEL_UP              0x08
 #define TJC_PAGE_OPEN_LEVEL_DOWN            0x09
 #define TJC_PAGE_OPEN_LEVEL_ENTER           0x0a
@@ -36,73 +26,14 @@
 //4.3.10 CLL 新增共振补偿超时强制跳转
 #define TJC_PAGE_OPEN_SYNTONY_JUMP_OUT      0x00
 
-#define TJC_PAGE_OPEN_FILAMENT_1            7       // 作废
-#define TJC_PAGE_OPEN_FILAMENT_1_NEXT       0x02    // 作废
-
 #define TJC_PAGE_NULL_2                     7
-#define TJC_PAGE_NULL_2_BACK                0x00
 #define TJC_PAGE_NULL_2_ENTER               0x01
 
 #define TJC_PAGE_MORE_LEVEL                 8
 #define TJC_PAGE_MORE_LEVEL_FINISH          0x01
-#define TJC_PAGE_MORE_LEVEL_PRINT           0x02
-
-#define TJC_PAGE_MORE_LEVEL_MAX             9
-#define TJC_PAGE_MORE_LEVEL_MAX_BACK        0x01
-#define TJC_PAGE_MORE_LEVEL_MAX_NEXT        0x02
 
 #define TJC_PAGE_MORE_LEVEL_PLU             10
-#define TJC_PAGE_MORE_LEVEL_PLU_BACK        0x01
 #define TJC_PAGE_MORE_LEVEL_PLU_ENTER       0x02
-
-#define TJC_PAGE_OPEN_FILAMENT_2            8
-#define TJC_PAGE_OPEN_FILAMENT_2_PREVIOUS   0x03
-#define TJC_PAGE_OPEN_FILAMENT_2_NEXT       0x04
-#define TJC_PAGE_OPEN_FILAMENT_2_DECREASE   0x0b
-#define TJC_PAGE_OPEN_FILAMENT_2_INCREASE   0x0c
-#define TJC_PAGE_OPEN_FILAMENT_2_10         0x06
-#define TJC_PAGE_OPEN_FILAMENT_2_20         0x07
-#define TJC_PAGE_OPEN_FILAMENT_2_50         0x08
-#define TJC_PAGE_OPEN_FILAMENT_2_UP         0x09
-#define TJC_PAGE_OPEN_FILAMENT_2_DOWN       0x0a
-
-#define TJC_PAGE_MORE_LEVEL_2               10
-#define TJC_PAGE_MORE_LEVEL_2_PLA           0x01
-#define TJC_PAGE_MORE_LEVEL_2_ABS           0x02
-
-#define TJC_PAGE_OPEN_VIDEO_1               87
-#define TJC_PAGE_OPEN_VIDEO_1_PREVIOUS      0x02
-#define TJC_PAGE_OPEN_VIDEO_1_RIGHT         0x03
-
-#define TJC_PAGE_OPEN_VIDEO_2               88
-#define TJC_PAGE_OPEN_VIDEO_2_PREVIOUS      0x02
-#define TJC_PAGE_OPEN_VIDEO_2_RIGHT         0x03
-
-#define TJC_PAGE_OPEN_VIDEO_3               89
-#define TJC_PAGE_OPEN_VIDEO_3_PREVIOUS      0x02
-#define TJC_PAGE_OPEN_VIDEO_3_RIGHT         0x03
-#define TJC_PAGE_OPEN_VIDEO_3_EXTRUDE       0x01
-
-#define TJC_PAGE_OPEN_VIDEO_4               90
-#define TJC_PAGE_OPEN_VIDEO_4_UP            0x00
-#define TJC_PAGE_OPEN_VIDEO_4_DOWN          0x01
-#define TJC_PAGE_OPEN_VIDEO_4_PREVIOUS      0x02
-#define TJC_PAGE_OPEN_VIDEO_4_NEXT          0x03
-
-#define TJC_PAGE_FILAMENT_VIDEO_1           92
-#define TJC_PAGE_FILAMENT_VIDEO_1_RIGHT     0x01
-
-#define TJC_PAGE_FILAMENT_VIDEO_2           93
-#define TJC_PAGE_FILAMENT_VIDEO_2_DECREASE  0x00
-#define TJC_PAGE_FILAMENT_VIDEO_2_INCREASE  0x02
-#define TJC_PAGE_FILAMENT_VIDEO_2_RIGHT     0x01
-#define TJC_PAGE_FILAMENT_VIDEO_2_TARGET    0x04
-
-#define TJC_PAGE_FILAMENT_VIDEO_3           94
-#define TJC_PAGE_FILAMENT_VIDEO_3_EXTRUDE   0x01
-#define TJC_PAGE_FILAMENT_VIDEO_3_NEXT      0x00
-
-
 
 #define TJC_PAGE_LOGO                       11
 
@@ -115,15 +46,16 @@
 #define TJC_PAGE_MAIN_VOICE                 0x02
 #define TJC_PAGE_MAIN_LOCK                  0x03
 
+// 原本这里页面id和控件id写法错误，一个是10进制，一个16进制
 #define TJC_PAGE_FILE_LIST_1                13
-#define TJC_PAGE_FILE_LIST_1_BTN_1          9
-#define TJC_PAGE_FILE_LIST_1_BTN_2          10
-#define TJC_PAGE_FILE_LIST_1_BTN_3          11
-#define TJC_PAGE_FILE_LIST_1_BTN_4          12
-#define TJC_PAGE_FILE_LIST_1_BTN_5          13
-#define TJC_PAGE_FILE_LIST_1_BTN_6          14
-#define TJC_PAGE_FILE_LIST_1_BTN_7          15
-#define TJC_PAGE_FILE_LIST_1_BTN_8          16
+#define TJC_PAGE_FILE_LIST_1_BTN_1          0x09
+#define TJC_PAGE_FILE_LIST_1_BTN_2          0x0a
+#define TJC_PAGE_FILE_LIST_1_BTN_3          0x0b
+#define TJC_PAGE_FILE_LIST_1_BTN_4          0x0c
+#define TJC_PAGE_FILE_LIST_1_BTN_5          0x0d
+#define TJC_PAGE_FILE_LIST_1_BTN_6          0x0e
+#define TJC_PAGE_FILE_LIST_1_BTN_7          0x0f
+#define TJC_PAGE_FILE_LIST_1_BTN_8          0x10
 #define TJC_PAGE_FILE_LIST_1_BTN_PREVIOUS   0x11
 #define TJC_PAGE_FILE_LIST_1_BTN_NEXT       0x12
 #define TJC_PAGE_FILE_LIST_1_BTN_HOME       0x13
@@ -140,7 +72,6 @@
 #define TJC_PAGE_FILE_LIST_2_BTN_6          0x06
 #define TJC_PAGE_FILE_LIST_2_BTN_7          0x07
 #define TJC_PAGE_FILE_LIST_2_BTN_8          0x08
-
 #define TJC_PAGE_FILE_LIST_2_BTN_BACK       0x11
 #define TJC_PAGE_FILE_LIST_2_BTN_PREVIOUS   0x12
 #define TJC_PAGE_FILE_LIST_2_BTN_NEXT       0x13
@@ -151,14 +82,8 @@
 
 #define TJC_PAGE_PREVIEW                    15
 #define TJC_PAGE_PREVIEW_BTN_START          0x00
-#define TJC_PAGE_PREVIEW_BTN_DELETE         0x01
 #define TJC_PAGE_PREVIEW_BTN_BACK           0x02
-//3.1.0 CLL 新增热床调平
 #define TJC_PAGE_PREVIEW_BED_LEVELING       0x03
-
-#define TJC_PAGE_DELETE_FILE                16
-#define TJC_PAGE_DELETE_FILE_YES            0x02
-#define TJC_PAGE_DELETE_FILE_NO             0x03
 
 //3.1.3 CLL 重置打印界面
 #define TJC_PAGE_PRINTING                   17
@@ -174,40 +99,48 @@
 #define TJC_PAGE_PRINTING_SET_FAN_3         0x09
 #define TJC_PAGE_PRINTING_PAUSE_RESUME      0x0a
 #define TJC_PAGE_PRINTING_BTN_STOP          0x0b
+// TODO: 暂时不知道👇这个控件是否需要替换上面的stop
+// #define TJC_PAGE_RPINTING_BTN_SHUTDOWN      0x0d
 
-#define TJC_PAGE_RPINTING_BTN_SHUTDOWN      0x0d
+#define TJC_PAGE_STOP_PRINT                 18
+#define TJC_PAGE_STOP_PRINT_YES             0x02
+#define TJC_PAGE_STOP_PRINT_NO              0x03
 
-#define TJC_PAGE_KEYBOARD_PRINT             6
+#define TJC_PAGE_PRINT_FINISH               19
+#define TJC_PAGE_PRINT_FINISH_YES           0x02
 
 #define TJC_PAGE_PRINT_ZOFFSET              20
 #define TJC_PAGE_PRINT_ZOFFSET_001          0x08
-#define TJC_PAGE_PRINT_ZOFFSET_01           0x0a
 #define TJC_PAGE_PRINT_ZOFFSET_005          0x09
+#define TJC_PAGE_PRINT_ZOFFSET_01           0x0a
 #define TJC_PAGE_PRINT_ZOFFSET_1            0x0b
 #define TJC_PAGE_PRINT_ZOFFSET_UP           0x02
 #define TJC_PAGE_PRINT_ZOFFSET_DOWN         0x03
-#define TJC_PAGE_PRINT_ZOFFSET_PAUSE_RESUME 0x0d
+#define TJC_PAGE_PRINT_ZOFFSET_PAUSE        0x0d
 #define TJC_PAGE_PRINT_ZOFFSET_STOP         0x12
 #define TJC_PAGE_PRINT_ZOFFSET_BACK         0x05
 
 #define TJC_PAGE_PRINT_FILAMENT             21
-#define TJC_PAGE_PRINT_FILAMENT_PAUSE_RESUME       0x0d
-#define TJC_PAGE_PRINT_FILAMENT_STOP        0x12
-#define TJC_PAGE_PRINT_FILAMENT_TARGET_UP   0x08
-#define TJC_PAGE_PRINT_FILAMENT_TARGET_DOWN 0x09
 #define TJC_PAGE_PRINT_FILAMENT_RETRACT     0x06
 #define TJC_PAGE_PRINT_FILAMENT_EXTRUDE     0x07
-#define TJC_PAGE_PRINT_FILAMENT_10          0x03
-#define TJC_PAGE_PRINT_FILAMENT_50          0x04
-#define TJC_PAGE_PRINT_FILAMENT_100         0x05
-#define TJC_PAGE_PRINT_FILAMENT_TARGET      0x0a
-#define TJC_PAGE_PRINT_FILAMENT_LOAD        0x0b
+#define TJC_PAGE_PRINT_FILAMENT_TEMP_UP     0x08
+#define TJC_PAGE_PRINT_FILAMENT_TEMP_DOWN   0x09
+#define TJC_PAGE_PRINT_FILAMENT_CHANGE      0x0a
 #define TJC_PAGE_PRINT_FILAMENT_UNLOAD      0x0c
+#define TJC_PAGE_PRINT_FILAMENT_PAUSE       0x0d
+#define TJC_PAGE_PRINT_FILAMENT_STOP        0x12    // 温度计图标 -> 停止打印
+// #define TJC_PAGE_PRINT_FILAMENT_10          0x03
+// #define TJC_PAGE_PRINT_FILAMENT_50          0x04
+// #define TJC_PAGE_PRINT_FILAMENT_100         0x05
+// #define TJC_PAGE_PRINT_FILAMENT_LOAD        0x0b
 
 #define TJC_PAGE_MOVE                       22
 #define TJC_PAGE_MOVE_FILAMENT              0x0d
 #define TJC_PAGE_MOVE_LEVEL_MODE            0x0e
 #define TJC_PAGE_MOVE_NETWORK               0x0f
+#define TJC_PAGE_MOVE_BTN_HOME              0x10
+#define TJC_PAGE_MOVE_BTN_FILE              0x11
+#define TJC_PAGE_MOVE_BTN_SERVICE           0x13
 #define TJC_PAGE_MOVE_01                    0x02
 #define TJC_PAGE_MOVE_1                     0x03
 #define TJC_PAGE_MOVE_10                    0x04
@@ -215,14 +148,11 @@
 #define TJC_PAGE_MOVE_X_DOWN                0x08
 #define TJC_PAGE_MOVE_Y_DOWN                0x05
 #define TJC_PAGE_MOVE_Y_UP                  0x06
-#define TJC_PAGE_MOVE_HOME                  0x0b
 #define TJC_PAGE_MOVE_Z_UP                  0x09
 #define TJC_PAGE_MVOE_Z_DOWN                0x0a
-#define TJC_PAGE_MOVE_BTN_HOME              0x10
-#define TJC_PAGE_MOVE_BTN_FILE              0x11
-#define TJC_PAGE_MOVE_BTN_SERVICE           0x13
-#define TJC_PAGE_MOVE_BTN_STOP              0x17
+#define TJC_PAGE_MOVE_HOMING                0x0b
 #define TJC_PAGE_MOVE_M84                   0x14
+// #define TJC_PAGE_MOVE_BTN_STOP              0x17
 
 #define TJC_PAGE_MOVE_POP_1                 23
 #define TJC_PAGE_MOVE_POP_1_YES             0x02
@@ -243,44 +173,40 @@
 #define TJC_PAGE_FILAMENT_BTN_HOME          0x0c
 #define TJC_PAGE_FILAMENT_BTN_FILE          0x0d
 #define TJC_PAGE_FILAMENT_BTN_SERVICE       0x0f
+// 👇更换耗材、进料、挤出机退料/进料
 #define TJC_PAGE_FILAMENT_UNLOAD            0x15
+#define TJC_PAGE_FILAMENT_LOAD              0x18
+#define TJC_PAGE_FILAMENT_BTN_RETRACT       0x16
+#define TJC_PAGE_FILAMENT_BTN_EXTRUDE       0x17
+// 👇三种调平移动距离
 #define TJC_PAGE_FILAMENT_BTN_10            0x1e
 #define TJC_PAGE_FILAMENT_BTN_50            0x1f
 #define TJC_PAGE_FILAMENT_BTN_100           0x20
-#define TJC_PAGE_FILAMENT_BTN_RETRACT       0x16
-#define TJC_PAGE_FILAMENT_BTN_EXTRUDE       0x17
+// 👇挤出机、热床、腔室
+#define TJC_PAGE_FILAMENT_EXTRUDER          0x11
 #define TJC_PAGE_FILAMENT_BTN_EXTRUDER      0x22
+#define TJC_PAGE_FILAMENT_HEATER_BED        0x12
 #define TJC_PAGE_FILAMENT_BTN_HEATER_BED    0x19
+#define TJC_PAGE_FILAMENT_HOT               0x13
 #define TJC_PAGE_FILAMENT_BTN_HOT           0x1a
+// 👇三个风扇
 #define TJC_PAGE_FILAMENT_BTN_FAN_1         0x06
 #define TJC_PAGE_FILAMENT_BTN_FAN_2         0x07
-//3.1.3 CLL 新增fan3
 #define TJC_PAGE_FILAMENT_BTN_FAN_3         0x05
+// 👇断料检测传感器
 #define TJC_PAGE_FILAMENT_BTN_FILAMENT_SENSOR   0x14
-#define TJC_PAGE_FILAMENT_EXTRUDER          0x11
-#define TJC_PAGE_FILAMENT_HEATER_BED        0x12
-#define TJC_PAGE_FILAMENT_HOT               0x13
-#define TJC_PAGE_FILAMENT_LOAD              0x18
-
-#define TJC_PAGE_FILAMENT_BTN_STOP          0x21
-
+// 👇暂停控件，在发布的版本中也没有涉猎
+// #define TJC_PAGE_FILAMENT_BTN_STOP          0x21
 
 #define TJC_PAGE_FILAMENT_POP               27
 #define TJC_PAGE_FILAMENT_POP_YES           0x02
 
-#ifdef XINDI_PLUS
-#define TJC_PAGE_FILAMENT_POP_2             28
-#else
-#define TJC_PAGE_FILAMENT_POP_2             64
-#endif
-#define TJC_PAGE_FILAMENT_POP_2_YES         0x02
+// page 28和 page64页面无效,已删除.
+// #define TJC_PAGE_KB_FILAMENT_2              30
+// #define TJC_PAGE_KB_FILAMENT_3              31
 
 #define TJC_PAGE_KB_FILAMENT_1              29
 #define TJC_PAGE_KB_FILAMENT_1_BACK         0x0f
-
-#define TJC_PAGE_KB_FILAMENT_2              30
-
-#define TJC_PAGE_KB_FILAMENT_3              31
 
 #define TJC_PAGE_LEVEL_MODE                 32
 #define TJC_PAGE_LEVEL_MODE_HOME            0x01
@@ -291,10 +217,10 @@
 #define TJC_PAGE_LEVEL_MODE_ZOFFSET         0x07
 #define TJC_PAGE_LEVEL_MODE_NETWORK         0x08
 #define TJC_PAGE_LEVEL_MODE_AUTO_LEVEL      0x09
-#define TJC_PAGE_LEVEL_MODE_MANUAL_LEVEL    0x0b
 #define TJC_PAGE_LEVEL_MODE_SET_ZOFFSET     0x0a
 #define TJC_PAGE_LEVEL_MODE_SYNTONY_MOVE    0x0c
-#define TJC_PAGE_LEVEL_MODE_PID             0x0d
+// #define TJC_PAGE_LEVEL_MODE_MANUAL_LEVEL    0x0b
+// #define TJC_PAGE_LEVEL_MODE_PID             0x0d
 
 #define TJC_PAGE_LEVELING_NULL              33
 #define TJC_PAGE_LEVELING_NULL_BTN_HOME     0x03
@@ -319,42 +245,42 @@
 #define TJC_PAGE_AUTO_FINISH                37
 #define TJC_PAGE_AUTO_FINISH_YES            0x01
 
-#define TJC_PAGE_MANUAL_LEVEL               38
-#define TJC_PAGE_MANUAL_LEVEL_001           0x02
-#define TJC_PAGE_MANUAL_LEVEL_0025          0x03
-#define TJC_PAGE_MANUAL_LEVEL_005           0x04
-#define TJC_PAGE_MANUAL_LEVEL_1             0x09
-#define TJC_PAGE_MANUAL_LEVEL_UP            0x05
-#define TJC_PAGE_MANUAL_LEVEL_DOWN          0x06
-#define TJC_PAGE_MANUAL_LEVEL_ENTER         0x07
+// #define TJC_PAGE_MANUAL_LEVEL               38
+// #define TJC_PAGE_MANUAL_LEVEL_001           0x02
+// #define TJC_PAGE_MANUAL_LEVEL_0025          0x03
+// #define TJC_PAGE_MANUAL_LEVEL_005           0x04
+// #define TJC_PAGE_MANUAL_LEVEL_1             0x09
+// #define TJC_PAGE_MANUAL_LEVEL_UP            0x05
+// #define TJC_PAGE_MANUAL_LEVEL_DOWN          0x06
+// #define TJC_PAGE_MANUAL_LEVEL_ENTER         0x07
 
-#define TJC_PAGE_MANUAL_MOVE                39
+// #define TJC_PAGE_MANUAL_MOVE                39
 
-#define TJC_PAGE_MANUAL_FINISH              40
-#define TJC_PAGE_MANUAL_FINISH_YES          0x01
+// #define TJC_PAGE_MANUAL_FINISH              40
+// #define TJC_PAGE_MANUAL_FINISH_YES          0x01
 
 #define TJC_PAGE_SET_ZOFFSET                41
 #define TJC_PAGE_SET_ZOFFSET_BACK           0x06
 #define TJC_PAGE_SET_ZOFFSET_HOME           0x02
 #define TJC_PAGE_SET_ZOFFSET_FILE           0x03
 #define TJC_PAGE_SET_ZOFFSET_SERVICE        0x05
-#define TJC_PAGE_SET_ZOFFSET_SAVE           0x01
-#define TJC_PAGE_SET_ZOFFSET_B1             0x07
-#define TJC_PAGE_SET_ZOFFSET_B2             0x08
-#define TJC_PAGE_SET_ZOFFSET_B3             0x09
-#define TJC_PAGE_SET_ZOFFSET_B4             0x0a
-#define TJC_PAGE_SET_ZOFFSET_B5             0x0b
-#define TJC_PAGE_SET_ZOFFSET_B6             0x0c
-#define TJC_PAGE_SET_ZOFFSET_B7             0x0d
-#define TJC_PAGE_SET_ZOFFSET_B8             0x0e
-#define TJC_PAGE_SET_ZOFFSET_B9             0x0f
-#define TJC_PAGE_SET_ZOFFSET_B10            0x10
-#define TJC_PAGE_SET_ZOFFSET_B11            0x11
-#define TJC_PAGE_SET_ZOFFSET_B12            0x12
-#define TJC_PAGE_SET_ZOFFSET_B13            0x13
-#define TJC_PAGE_SET_ZOFFSET_B14            0x14
-#define TJC_PAGE_SET_ZOFFSET_B15            0x15
-#define TJC_PAGE_SET_ZOFFSET_B16            0x16
+// #define TJC_PAGE_SET_ZOFFSET_SAVE           0x01
+// #define TJC_PAGE_SET_ZOFFSET_B1             0x07
+// #define TJC_PAGE_SET_ZOFFSET_B2             0x08
+// #define TJC_PAGE_SET_ZOFFSET_B3             0x09
+// #define TJC_PAGE_SET_ZOFFSET_B4             0x0a
+// #define TJC_PAGE_SET_ZOFFSET_B5             0x0b
+// #define TJC_PAGE_SET_ZOFFSET_B6             0x0c
+// #define TJC_PAGE_SET_ZOFFSET_B7             0x0d
+// #define TJC_PAGE_SET_ZOFFSET_B8             0x0e
+// #define TJC_PAGE_SET_ZOFFSET_B9             0x0f
+// #define TJC_PAGE_SET_ZOFFSET_B10            0x10
+// #define TJC_PAGE_SET_ZOFFSET_B11            0x11
+// #define TJC_PAGE_SET_ZOFFSET_B12            0x12
+// #define TJC_PAGE_SET_ZOFFSET_B13            0x13
+// #define TJC_PAGE_SET_ZOFFSET_B14            0x14
+// #define TJC_PAGE_SET_ZOFFSET_B15            0x15
+// #define TJC_PAGE_SET_ZOFFSET_B16            0x16
 
 #define TJC_PAGE_SYNTONY_MOVE               42
 //4.3.10 CLL 新增共振补偿超时强制跳转
@@ -362,21 +288,21 @@
 
 #define TJC_PAGE_SYNTONY_FINISH             43
 
-#define TJC_PAGE_WIFI_LIST_1                44
-#define TJC_PAGE_WIFI_LIST_1_BTN_HOME       0x06
-#define TJC_PAGE_WIFI_LIST_1_BTN_FILE       0x07
-#define TJC_PAGE_WIFI_LIST_1_BTN_SERVICE    0x09
-#define TJC_PAGE_WIFI_LIST_1_MOVE           0x02
-#define TJC_PAGE_WIFI_LIST_1_FILAMENT       0x03
-#define TJC_PAGE_WIFI_LIST_1_AUTO_LEVEL     0x04
-#define TJC_PAGE_WIFI_LIST_1_PREVIOUS       0x0b
-#define TJC_PAGE_WIFI_LIST_1_NEXT           0x0c
-#define TJC_PAGE_WIFI_LIST_1_SSID_1         0x15
-#define TJC_PAGE_WIFI_LIST_1_SSID_2         0x11
-#define TJC_PAGE_WIFI_LIST_1_SSID_3         0x12
-#define TJC_PAGE_WIFI_LIST_1_SSID_4         0x13
-#define TJC_PAGE_WIFI_LIST_1_SSID_5         0x14
-#define TJC_PAGE_WIFI_LIST_1_REFRESH        0x16
+// #define TJC_PAGE_WIFI_LIST_1                44
+// #define TJC_PAGE_WIFI_LIST_1_BTN_HOME       0x06
+// #define TJC_PAGE_WIFI_LIST_1_BTN_FILE       0x07
+// #define TJC_PAGE_WIFI_LIST_1_BTN_SERVICE    0x09
+// #define TJC_PAGE_WIFI_LIST_1_MOVE           0x02
+// #define TJC_PAGE_WIFI_LIST_1_FILAMENT       0x03
+// #define TJC_PAGE_WIFI_LIST_1_AUTO_LEVEL     0x04
+// #define TJC_PAGE_WIFI_LIST_1_PREVIOUS       0x0b
+// #define TJC_PAGE_WIFI_LIST_1_NEXT           0x0c
+// #define TJC_PAGE_WIFI_LIST_1_SSID_1         0x15
+// #define TJC_PAGE_WIFI_LIST_1_SSID_2         0x11
+// #define TJC_PAGE_WIFI_LIST_1_SSID_3         0x12
+// #define TJC_PAGE_WIFI_LIST_1_SSID_4         0x13
+// #define TJC_PAGE_WIFI_LIST_1_SSID_5         0x14
+// #define TJC_PAGE_WIFI_LIST_1_REFRESH        0x16
 
 #define TJC_PAGE_WIFI_LIST_2                45
 #define TJC_PAGE_WIFI_LIST_2_BTN_HOME       0x06
@@ -387,21 +313,14 @@
 #define TJC_PAGE_WIFI_LIST_2_AUTO_LEVEL     0x04
 #define TJC_PAGE_WIFI_LIST_2_PREVIOUS       0x0b
 #define TJC_PAGE_WIFI_LIST_2_NEXT           0x0c
+#define TJC_PAGE_WIFI_LIST_2_BACK           0x0d
 #define TJC_PAGE_WIFI_LIST_2_SSID_1         0x15
 #define TJC_PAGE_WIFI_LIST_2_SSID_2         0x11
 #define TJC_PAGE_WIFI_LIST_2_SSID_3         0x12
 #define TJC_PAGE_WIFI_LIST_2_SSID_4         0x13
 #define TJC_PAGE_WIFI_LIST_2_SSID_5         0x14
 #define TJC_PAGE_WIFI_LIST_2_REFRESH        0x16
-#define TJC_PAGE_WIFI_LIST_2_EHTNET         0x17
-
-// #define TJC_PAGE_WIFI_LIST_2                44
-// #define TJC_PAGE_WIFI_LIST_2_BTN_HOME       0x05
-// #define TJC_PAGE_WIFI_LIST_2_BTN_FILE       0x06
-// #define TJC_PAGE_WIFI_LIST_2_BTN_SERVICE    0x08
-// #define TJC_PAGE_WIFI_LIST_2_MOVE          0x01
-// #define TJC_PAGE_WIFI_LIST_2_FILAMENT      0x02
-// #define TJC_PAGE_WIFI_LIST_2_AUTO_LEVEL    0x03
+// #define TJC_PAGE_WIFI_LIST_2_EHTNET         0x17
 
 #define TJC_PAGE_INTERNET                   46
 #define TJC_PAGE_INTERNET_BTN_HOME          0x05
@@ -410,7 +329,8 @@
 #define TJC_PAGE_INTERNET_MOVE              0x01
 #define TJC_PAGE_INTERNET_FILAMENT          0x02
 #define TJC_PAGE_INTERNET_AUTO_LEVEL        0x03
-#define TJC_PAGE_INTERNET_WIFI              0x17
+#define TJC_PAGE_INTERNET_WIFI              0x04
+#define TJC_PAGE_INTERNET_BACK              0x0d
 
 #define TJC_PAGE_LANGUAGE                   47
 #define TJC_PAGE_LANGUAGE_BTN_HOME          0x05
@@ -438,11 +358,9 @@
 #define TJC_PAGE_RESET_RESTART_KLIPPER      0x09
 #define TJC_PAGE_RESET_FIRMWARE_RESTART     0x0a
 
-#ifdef  XINDI_PLUS
+// TODO：UI检查到👆了，一会儿解决完bug继续检查
+
 #define TJC_PAGE_ABOUT                      50
-#else
-#define TJC_PAGE_ABOUT                      99
-#endif
 #define TJC_PAGE_ABOUT_S_BTN                0x03  //2023.5.9 CLL 隐藏开机引导
 #define TJC_PAGE_ABOUT_BTN_HOME             0x04
 #define TJC_PAGE_ABOUT_BTN_FILE             0x05
@@ -450,26 +368,20 @@
 #define TJC_PAGE_ABOUT_LANGUAGE             0x01
 #define TJC_PAGE_ABOUT_SERVICE              0x02
 #define TJC_PAGE_ABOUT_RESET                0x0a
-#define TJC_PAGE_ABOUT_UPDATE               0x0c
 #define TJC_PAGE_ABOUT_OOBE                 0x0e
 //4.3.7 CLL 新增恢复出厂设置按钮
 #define TJC_PAGE_ABOUT_RESTORE              0x0f
 //4.3.10 CLL 新增输出日志文件功能
 #define TJC_PAGE_ABOUT_PRINT_LOG            0x10
+#define TJC_PAGE_ABOUT_OFFLINE_UPDATE       0x0c
+#define TJC_PAGE_ABOUT_ONLINE_UPDATE        0x11
+#define TJC_PAGE_ABOUT_SLEEP                0x15
 
 #define TJC_PAGE_PRINT_F_POP                53
 #define TJC_PAGE_PRINT_F_POP_YES            0x02
 
 #define TJC_PAGE_PRINT_KEYBOARD             0x24
 #define TJC_PAGE_PRINT_KEYBOARD_BACK        0x17
-
-#define TJC_PAGE_PRINT_FINISH               19
-#define TJC_PAGE_PRINT_FINISH_YES           0x02
-// #define TJC_PAGE_PRINT_FINISH_NO            0x03
-
-#define TJC_PAGE_STOP_PRINT                 18
-#define TJC_PAGE_STOP_PRINT_YES             0x02
-#define TJC_PAGE_STOP_PRINT_NO              0x03
 
 #define TJC_PAGE_KEYBDB                     0x34
 #define TJC_PAGE_KEYBDB_BACK                0x17
@@ -505,20 +417,20 @@
 
 #define TJC_PAGE_STOPPING                   58
 
-#define TJC_PAGE_NO_UPDATA                  62
-// #define TJC_PAGE_NO_UPDATA                  100
-#define TJC_PAGE_NO_UPDATA_S_BTN            0x03 //2023.5.9 CLL 隐藏开机引导
-#define TJC_PAGE_NO_UPDATA_BTN_HOME         0x04
-#define TJC_PAGE_NO_UPDATA_BTN_FILE         0x05
-#define TJC_PAGE_NO_UPDATA_BTN_TOOL         0x06
-#define TJC_PAGE_NO_UPDATA_LANGUAGE         0x01
-#define TJC_PAGE_NO_UPDATA_SERVICE          0x02
-#define TJC_PAGE_NO_UPDATA_RESET            0x09
-#define TJC_PAGE_NO_UPDATA_OOBE             0x0e
-//4.3.7 CLL 新增恢复出厂设置按钮
-#define TJC_PAGE_NO_UPDATA_RESTORE          0x0f
-//4.3.10 CLL 新增输出日志文件功能
-#define TJC_PAGE_NO_UPDATA_PRINT_LOG        0x10
+// #define TJC_PAGE_NO_UPDATE                  62
+// #define TJC_PAGE_NO_UPDATE_S_BTN            0x03 //2023.5.9 CLL 隐藏开机引导
+// #define TJC_PAGE_NO_UPDATE_BTN_HOME         0x04
+// #define TJC_PAGE_NO_UPDATE_BTN_FILE         0x05
+// #define TJC_PAGE_NO_UPDATE_BTN_TOOL         0x06
+// #define TJC_PAGE_NO_UPDATE_LANGUAGE         0x01
+// #define TJC_PAGE_NO_UPDATE_SERVICE          0x02
+// #define TJC_PAGE_NO_UPDATE_RESET            0x09
+// #define TJC_PAGE_NO_UPDATE_OOBE             0x0e
+// //4.3.7 CLL 新增恢复出厂设置按钮
+// #define TJC_PAGE_NO_UPDATE_RESTORE          0x0f
+// //4.3.10 CLL 新增输出日志文件功能
+// #define TJC_PAGE_NO_UPDATE_PRINT_LOG        0x10
+// #define TJC_PAGE_NO_UPDATE_ONLINE_UPDATE    0x11
 
 #define TJC_PAGE_KEYDBA                     51
 #define TJC_PAGE_KEYDBA_HOME                0x2c
@@ -608,6 +520,38 @@
 #define TJC_PAGE_WIFI_SAVE                  85
 
 #define TJC_PAGE_UPDATE_SCREEN              86
+
+#define TJC_PAGE_OPEN_VIDEO_1               87
+#define TJC_PAGE_OPEN_VIDEO_1_PREVIOUS      0x02
+#define TJC_PAGE_OPEN_VIDEO_1_RIGHT         0x03
+
+#define TJC_PAGE_OPEN_VIDEO_2               88
+#define TJC_PAGE_OPEN_VIDEO_2_PREVIOUS      0x02
+#define TJC_PAGE_OPEN_VIDEO_2_RIGHT         0x03
+
+#define TJC_PAGE_OPEN_VIDEO_3               89
+#define TJC_PAGE_OPEN_VIDEO_3_PREVIOUS      0x02
+#define TJC_PAGE_OPEN_VIDEO_3_RIGHT         0x03
+#define TJC_PAGE_OPEN_VIDEO_3_EXTRUDE       0x01
+
+#define TJC_PAGE_OPEN_VIDEO_4               90
+#define TJC_PAGE_OPEN_VIDEO_4_UP            0x00
+#define TJC_PAGE_OPEN_VIDEO_4_DOWN          0x01
+#define TJC_PAGE_OPEN_VIDEO_4_PREVIOUS      0x02
+#define TJC_PAGE_OPEN_VIDEO_4_NEXT          0x03
+
+#define TJC_PAGE_FILAMENT_VIDEO_1           92
+#define TJC_PAGE_FILAMENT_VIDEO_1_RIGHT     0x01
+
+#define TJC_PAGE_FILAMENT_VIDEO_2           93
+#define TJC_PAGE_FILAMENT_VIDEO_2_DECREASE  0x00
+#define TJC_PAGE_FILAMENT_VIDEO_2_INCREASE  0x02
+#define TJC_PAGE_FILAMENT_VIDEO_2_RIGHT     0x01
+#define TJC_PAGE_FILAMENT_VIDEO_2_TARGET    0x04
+
+#define TJC_PAGE_FILAMENT_VIDEO_3           94
+#define TJC_PAGE_FILAMENT_VIDEO_3_EXTRUDE   0x01
+#define TJC_PAGE_FILAMENT_VIDEO_3_NEXT      0x00
 
 #define TJC_PAGE_WIFI_KEYBOARD              91
 #define TJC_PAGE_WIFI_KEYBOARD_BACK         0x02 
@@ -728,8 +672,99 @@
 #define TJC_PAGE_PRE_HEAITNG_1_SET_3         0x02
 #define TJC_PAGE_PRE_HEATING_1_BACK          0x04
 
-#endif
+#define TJC_PAGE_NETWORK_SET                     129
+#define TJC_PAGE_NETWORK_SET_BTN_HOME            0x06
+#define TJC_PAGE_NETWORK_SET_BTN_FILE            0x07
+#define TJC_PAGE_NETWORK_SET_BTN_SERVICE         0x09
+#define TJC_PAGE_NETWORK_SET_MOVE                0x02
+#define TJC_PAGE_NETWORK_SET_FILAMENT            0x03
+#define TJC_PAGE_NETWORK_SET_AUTO_LEVEL          0x04
+#define TJC_PAGE_NETWORK_SET_ETHERNET            0x0a
+#define TJC_PAGE_NETWORK_SET_REFRESH             0x0b
+#define TJC_PAGE_NETWORK_SET_WIFI_LINK           0x0c
+#define TJC_PAGE_NETWORK_SET_SERVER              0x0d
+#define TJC_PAGE_NETWORK_SET_QIDI_LINK           0x0e
+#define TJC_PAGE_NETWORK_SET_BTN_LAN             0x0f
 
+#define TJC_PAGE_SERVER_SET                  130
+#define TJC_PAGE_SERVER_SET_BTN_HOME         0x06
+#define TJC_PAGE_SERVER_SET_BTN_FILE         0x07
+#define TJC_PAGE_SERVER_SET_BTN_SERVICE      0x09
+#define TJC_PAGE_SERVER_SET_MOVE             0x02
+#define TJC_PAGE_SERVER_SET_FILAMENT         0x03
+#define TJC_PAGE_SERVER_SET_AUTO_LEVEL       0x04
+#define TJC_PAGE_SERVER_SET_REFRESH          0x16
+#define TJC_PAGE_SERVER_SET_ETHERNET         0x17
+#define TJC_PAGE_SERVER_SET_PREVIOUS         0x0b
+#define TJC_PAGE_SERVER_SET_NEXT             0x0c
+#define TJC_PAGE_SERVER_SET_BACK             0x0d
+#define TJC_PAGE_SERVER_SET_1                0x20
+#define TJC_PAGE_SERVER_SET_2                0x21
+#define TJC_PAGE_SERVER_SET_3                0x22
+#define TJC_PAGE_SERVER_SET_4                0x23
+#define TJC_PAGE_SERVER_SET_5                0x24
+
+#define TJC_PAGE_SEARCH_SERVER               131
+
+#define TJC_PAGE_ONLINE_UPDATE               132
+#define TJC_PAGE_ONLINE_UPDATE_BACK          0x00
+#define TJC_PAGE_ONLINE_UPDATE_NEXT          0x01
+
+#define TJC_PAGE_INSTALLING                  133
+
+#define TJC_PAGE_OFFLINE_UPDATE              134
+#define TJC_PAGE_OFFLINE_UPDATE_YES          0x00
+#define TJC_PAGE_OFFLINE_UPDATE_NO           0x01
+
+#define TJC_PAGE_RESUME_PRINT                135
+#define TJC_PAGE_RESUME_PRINT_YES            0x00
+#define TJC_PAGE_RESUME_PRINT_NO             0x01
+#define TJC_PAGE_RESUME_PRINT_CHECK          0x02
+
+#define TJC_PAGE_RE_PRINTING                 136
+
+#define TJC_PAGE_QIDI_LINK                   137
+#define TJC_PAGE_QIDI_LINK_BTN_HOME          0x06
+#define TJC_PAGE_QIDI_LINK_BTN_FILE          0x07
+#define TJC_PAGE_QIDI_LINK_BTN_SERVICE       0x09
+#define TJC_PAGE_QIDI_LINK_MOVE              0x02
+#define TJC_PAGE_QIDI_LINK_FILAMENT          0x03
+#define TJC_PAGE_QIDI_LINK_AUTO_LEVEL        0x04
+#define TJC_PAGE_QIDI_LINK_BACK              0x00
+// #define TJC_PAGE_QIDI_LINK_REFRESH           0x01
+
+#define TJC_PAGE_QIDI_LINK_LOGIN_SUCCESS              138
+#define TJC_PAGE_QIDI_LINK_LOGIN_SUCCESS_HOME         0x06
+#define TJC_PAGE_QIDI_LINK_LOGIN_SUCCESS_FILE         0x07
+#define TJC_PAGE_QIDI_LINK_LOGIN_SUCCESS_SERVICE      0x09
+#define TJC_PAGE_QIDI_LINK_LOGIN_SUCCESS_MOVE         0x02
+#define TJC_PAGE_QIDI_LINK_LOGIN_SUCCESS_FILAMENT     0x03
+#define TJC_PAGE_QIDI_LINK_LOGIN_SUCCESS_AUTO_LEVEL   0x04
+#define TJC_PAGE_QIDI_LINK_LOGIN_SUCCESS_BACK         0x00
+#define TJC_PAGE_QIDI_LINK_LOGIN_SUCCESS_OUT          0x01
+
+
+#define TJC_PAGE_QIDI_LINK_LOG_OUT            139
+#define TJC_PAGE_QIDI_LINK_LOG_OUT_CANCEL     0x00
+#define TJC_PAGE_QIDI_LINK_LOG_OUT_CONFIRM    0x01
+
+#define TJC_PAGE_QIDI_LINK_LOG_FAIL              140
+#define TJC_PAGE_QIDI_LINK_LOG_FAIL_HOME         0x06
+#define TJC_PAGE_QIDI_LINK_LOG_FAIL_FILE         0x07
+#define TJC_PAGE_QIDI_LINK_LOG_FAIL_SERVICE      0x09
+#define TJC_PAGE_QIDI_LINK_LOG_FAIL_MOVE         0x02
+#define TJC_PAGE_QIDI_LINK_LOG_FAIL_FILAMENT     0x03
+#define TJC_PAGE_QIDI_LINK_LOG_FAIL_AUTO_LEVEL   0x04
+#define TJC_PAGE_QIDI_LINK_LOG_FAIL_BACK         0x00
+
+#define TJC_PAGE_OFF_UPDATE_CHOOSE               141
+#define TJC_PAGE_OFF_UPDATE_CHOOSE_CONFIRM       0x00
+#define TJC_PAGE_OFF_UPDATE_CHOOSE_CANCLE        0x01
+
+#define TJC_PAGE_OFFLINE_UPDATING                142
+
+#define TJC_PAGE_NO_OFFLINE_FILES                143
+#define TJC_PAGE_NO_OFFLINE_FILES_CONFIRM        0x00
 
 void parse_cmd_msg_from_tjc_screen(char *cmd);
 void page_to(int page_id);

@@ -12,15 +12,14 @@
 #include <string>
 #include <map>
 #include <memory>
+#include <dirent.h>
 
 #include "../include/event.h"
 #include "../include/send_msg.h"
 #include "../include/MakerbaseSerial.h"
 
-//#define MKSUPDATE       "QD_Plus_SOC"
-//#define MKSUI           "QD_Plus3_UI5.0"
-#define MKSUPDATE       "QD_Max_SOC"
-#define MKSUI           "QD_Max3_UI5.0"
+// #define MKSOC       "QD_Max_SOC"
+// #define MKSUI       "QD_Max3_UI5.0"
 
 extern int tty_fd;                          // main.cpp 里面的变量
 extern bool is_download_to_screen;          // main.cpp 里面的变量
@@ -29,9 +28,13 @@ extern std::string mks_babystep_value;
 
 int copy_fd;
 
-bool detected_soc_data;
+bool detected_max3_soc_data;
 bool detected_mcu_data;
-bool detected_ui_data;
+bool detected_max3_ui_data;
+
+DIR *dir;
+struct dirent *entry;
+std::string update_base_path = "/home/mks/gcode_files/sda1/QD_Update/";
 
 bool detected_printer_cfg;
 bool detected_MKS_THR_cfg;
@@ -69,7 +72,7 @@ int u_disk_update() {
 
     for (j = 0; j < 4; j++) {
         for (i = 0; i < 8; i++) {
-            sprintf(PATH, "/home/mks/gcode_files/sd%c%d/QD_Update/"MKSUPDATE, ch[i], j);
+            sprintf(PATH, "/home/mks/gcode_files/sd%c%d/QD_Update/QD_Max_SOC", ch[i], j);
             fd = access(PATH, F_OK);
             if (fd == 0) {
                 printf("检测到U盘下存在目录%s，正在检测更新文件\n", PATH);
@@ -100,33 +103,57 @@ bool detect_update() {
     int fd_ui_data;
     int fd_printer_cfg;
     int fd_mks_thr_cfg;
-
     //3.1.4 CLL 工厂更新模式
     int fd_gcode;
-
     //4.3.7 CLL 新增deb文件也能更新
     int fd_soc_deb;
 
-    fd_soc_data = access("/home/mks/gcode_files/sda1/QD_Update/"MKSUPDATE, F_OK);
-    if (fd_soc_data == 0) {
-        detected_soc_data = true;
-    } else {
-        detected_soc_data = false;
+    if ((dir = opendir(update_base_path.c_str())) != nullptr)
+    {
+        while ((entry = readdir(dir)) != nullptr)
+        {
+            std::string filename = entry->d_name;
+            // 跳过以 .bak 结尾的文件
+            if (filename.rfind(".bak") == filename.length() - 4) {
+                continue;
+            }
+            if (filename.find("QD_Max3_UI5.0") == 0)
+            {
+                detected_max3_ui_data = true;
+                continue;
+            }
+            if (filename.find("QD_Max_SOC") == 0)
+            {
+                detected_max3_soc_data = true;
+                continue;
+            }
+        }
+        closedir(dir);
     }
+    else
+    {
+        printf("USB Device Path Not Found: %s\n", update_base_path.c_str());
+    }
+
+    // fd_soc_data = access("/home/mks/gcode_files/sda1/QD_Update/QD_Max_SOC", F_OK);
+    // if (fd_soc_data == 0) {
+    //     detected_max3_soc_data = true;
+    // } else {
+    //     detected_max3_soc_data = false;
+    // }
+
+    // fd_ui_data = access("/home/mks/gcode_files/sda1/QD_Update/QD_Max3_UI5.0", F_OK);
+    // if (fd_ui_data == 0) {
+    //     detected_max3_ui_data = true;
+    // } else {
+    //     detected_max3_ui_data = false;
+    // }
 
     fd_mcu_data = access("/home/mks/gcode_files/sda1/QD_MCU/MCU", F_OK);
     if (fd_mcu_data == 0) {
         detected_mcu_data = true;
     } else {
         detected_mcu_data = false;
-    }
-
-    fd_ui_data = access("/home/mks/gcode_files/sda1/QD_Update/"MKSUI, F_OK);
-
-    if (fd_ui_data == 0) {
-        detected_ui_data = true;
-    } else {
-        detected_ui_data = false;
     }
 
     fd_printer_cfg = access("/home/mks/gcode_files/sda1/QD_Update/printer.cfg", F_OK);
@@ -154,77 +181,42 @@ bool detect_update() {
     //4.3.7 CLL 新增deb文件也能更新
     if (access("/home/mks/gcode_files/sda1/QD_factory_mode.txt",F_OK) == 0) {
         fd_soc_deb = access("/home/mks/gcode_files/sda1/QD_Update/mks.deb",F_OK);
-        if (fd_soc_deb == 0) {
+        if (fd_soc_deb == 0)
+        {
             detected_soc_deb = true;
-        } else {
+        } 
+        else
+        {
             detected_soc_deb = false;
         }
     }
 
     //3.1.4 CLL 工厂更新模式
-    return (detected_soc_data | detected_mcu_data | detected_ui_data | detected_printer_cfg | detected_MKS_THR_cfg | detected_gcode | detected_soc_deb);
+    return (detected_max3_soc_data | detected_mcu_data | detected_max3_ui_data | detected_printer_cfg | detected_MKS_THR_cfg | detected_gcode | detected_soc_deb);
 }
 
 void start_update() {
+    // 清空预览图缓存
     system("rm /home/mks/gcode_files/.cache/*");
-
-    if (detected_soc_data == true) {
-        if (access("/home/mks/gcode_files/sda1/QD_factory_mode.txt", F_OK) == 0) {
-            std::cout << "检测到qidi文件" << std::endl;
-            system("mv /home/mks/gcode_files/sda1/QD_Update/"MKSUPDATE" /home/mks/gcode_files/sda1/QD_Update/mks.deb; dpkg -i /home/mks/gcode_files/sda1/QD_Update/mks.deb; mv /home/mks/gcode_files/sda1/QD_Update/mks.deb /home/mks/gcode_files/sda1/QD_Update/"MKSUPDATE"; sync;");
-        } else {
-            if (access("/home/mks/gcode_files/sda1/QD_Update/QD_factory_mode.txt", F_OK) == 0) {
-                std::cout << "检测到qidi文件" << std::endl;
-                get_mks_babystep();
-                system("mv /home/mks/gcode_files/sda1/QD_Update/"MKSUPDATE" /home/mks/gcode_files/sda1/QD_Update/mks.deb; dpkg -i /home/mks/gcode_files/sda1/QD_Update/mks.deb; mv /home/mks/gcode_files/sda1/QD_Update/mks.deb /home/mks/gcode_files/sda1/QD_Update/"MKSUPDATE"; sync;");
-                set_mks_babystep(mks_babystep_value);
-            } else {
-                std::cout << "没有检测到qidi文件" << std::endl;
-                get_mks_babystep();
-                system("mv /home/mks/gcode_files/sda1/QD_Update/"MKSUPDATE" /home/mks/gcode_files/sda1/QD_Update/mks.deb; dpkg -i /home/mks/gcode_files/sda1/QD_Update/mks.deb; mv /home/mks/gcode_files/sda1/QD_Update/mks.deb /home/mks/gcode_files/sda1/QD_Update/"MKSUPDATE".bak; sync;");
-                set_mks_babystep(mks_babystep_value);
-            }
-        }
-    } else if (detected_soc_deb == true) { //4.3.7 CLL 修改deb文件可以更新
-        if (access("/home/mks/gcode_files/sda1/QD_factory_mode.txt", F_OK) == 0) {
-            system("dpkg -i /home/mks/gcode_files/sda1/QD_Update/mks.deb;sync");
-        }
-    }
 
     if (detected_mcu_data == true) {
         if (access("/home/mks/gcode_files/sda1/QD_factory_mode.txt", F_OK) == 0) {
             system("cp /home/mks/gcode_files/sda1/QD_MCU/MCU /root/klipper.bin;");
-            // reset_firmware();
             close_mcu_port();
             system("service klipper stop; /root/hid-flash /root/klipper.bin ttyS0; systemctl start klipper; ");
         } else {
             if (access("/home/mks/gcode_files/sda1/QD_Update/QD_factory_mode.txt", F_OK) == 0) {
                 system("cp /home/mks/gcode_files/sda1/QD_MCU/MCU /root/klipper.bin;");
-                // reset_firmware();
                 close_mcu_port();
                 system("service klipper stop; /root/hid-flash /root/klipper.bin ttyS0; systemctl start klipper; ");
             } else {
                 system("cp /home/mks/gcode_files/sda1/QD_MCU/MCU /root/klipper.bin;");
-                // reset_firmware();
                 close_mcu_port();
                 system("service klipper stop; /root/hid-flash /root/klipper.bin ttyS0; systemctl start klipper; mv /home/mks/gcode_files/sda1/QD_MCU/MCU /home/mks/gcode_files/sda1/QD_MCU/MCU.bak");
             }
             
         }
 
-    }
-
-
-    if (detected_ui_data == true) {
-        if (access("/home/mks/gcode_files/sda1/QD_factory_mode.txt", F_OK) == 0) {
-            system("cp /home/mks/gcode_files/sda1/QD_Update/"MKSUI" /root/800_480.tft; sync");
-        } else {
-            if (access("/home/mks/gcode_files/sda1/QD_Update/QD_factory_mode.txt", F_OK) == 0) {
-                system("cp /home/mks/gcode_files/sda1/QD_Update/"MKSUI" /root/800_480.tft; sync");
-            } else {
-                system("cp /home/mks/gcode_files/sda1/QD_Update/"MKSUI" /root/800_480.tft; mv /home/mks/gcode_files/sda1/QD_Update/"MKSUI" /home/mks/gcode_files/sda1/QD_Update/"MKSUI".bak; sync");
-            }
-        }
     }
 
     if (detected_printer_cfg == true) {
@@ -255,8 +247,48 @@ void start_update() {
     if (detected_gcode == true) {
         //先清空gcode_files文件夹中的所有其他文件,会保留下sda1目录和其中的文件，使用-rf指令，更改路径需要谨慎！！！
         system("rm /home/mks/gcode_files/*");
+        system("rm /home/mks/gcode_files/.thumbs/*\n");
+        system("systemctl stop moonraker.service\n");
         system("find /home/mks/gcode_files -maxdepth 1 -type d ! -name sd* -a ! -name '.*' | grep gcode_files/ | xargs rm -rf");
         system("cp /home/mks/gcode_files/sda1/QD_Update/QD_gcode/*.gcode /home/mks/gcode_files; chmod 777 /home/mks/gcode_files/*.gcode; sync");
+        system("chown -R mks:mks /home/mks/gcode_files\n");
+        sleep(3);
+        system("systemctl restart moonraker.service\n");
+    }
+
+    if (detected_max3_ui_data == true) {
+        if (access("/home/mks/gcode_files/sda1/QD_factory_mode.txt", F_OK) == 0) {
+            system("cp /home/mks/gcode_files/sda1/QD_Update/QD_Max3_UI5.0 /root/800_480.tft; sync");
+        } else {
+            if (access("/home/mks/gcode_files/sda1/QD_Update/QD_factory_mode.txt", F_OK) == 0) {
+                system("cp /home/mks/gcode_files/sda1/QD_Update/QD_Max3_UI5.0 /root/800_480.tft; sync");
+            } else {
+                system("cp /home/mks/gcode_files/sda1/QD_Update/QD_Max3_UI5.0 /root/800_480.tft; mv /home/mks/gcode_files/sda1/QD_Update/QD_Max3_UI5.0 /home/mks/gcode_files/sda1/QD_Update/QD_Max3_UI5.0.bak; sync");
+            }
+        }
+    }
+
+    if (detected_max3_soc_data == true) {
+        if (access("/home/mks/gcode_files/sda1/QD_factory_mode.txt", F_OK) == 0) {
+            std::cout << "检测到qidi文件" << std::endl;
+            system("mv /home/mks/gcode_files/sda1/QD_Update/QD_Max_SOC /home/mks/gcode_files/sda1/QD_Update/mks.deb; dpkg -i /home/mks/gcode_files/sda1/QD_Update/mks.deb; mv /home/mks/gcode_files/sda1/QD_Update/mks.deb /home/mks/gcode_files/sda1/QD_Update/QD_Max_SOC; sync;");
+        } else {
+            if (access("/home/mks/gcode_files/sda1/QD_Update/QD_factory_mode.txt", F_OK) == 0) {
+                std::cout << "检测到qidi文件" << std::endl;
+                get_mks_babystep();
+                system("mv /home/mks/gcode_files/sda1/QD_Update/QD_Max_SOC /home/mks/gcode_files/sda1/QD_Update/mks.deb; dpkg -i /home/mks/gcode_files/sda1/QD_Update/mks.deb; mv /home/mks/gcode_files/sda1/QD_Update/mks.deb /home/mks/gcode_files/sda1/QD_Update/QD_Max_SOC; sync;");
+                set_mks_babystep(mks_babystep_value);
+            } else {
+                std::cout << "没有检测到qidi文件" << std::endl;
+                get_mks_babystep();
+                system("mv /home/mks/gcode_files/sda1/QD_Update/QD_Max_SOC /home/mks/gcode_files/sda1/QD_Update/mks.deb; dpkg -i /home/mks/gcode_files/sda1/QD_Update/mks.deb; mv /home/mks/gcode_files/sda1/QD_Update/mks.deb /home/mks/gcode_files/sda1/QD_Update/QD_Max_SOC.bak; sync;");
+                set_mks_babystep(mks_babystep_value);
+            }
+        }
+    } else if (detected_soc_deb == true) { //4.3.7 CLL 修改deb文件可以更新
+        if (access("/home/mks/gcode_files/sda1/QD_factory_mode.txt", F_OK) == 0) {
+            system("dpkg -i /home/mks/gcode_files/sda1/QD_Update/mks.deb;sync");
+        }
     }
 
     update_finished_tips();

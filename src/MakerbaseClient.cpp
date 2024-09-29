@@ -129,7 +129,8 @@ bool MakerbaseClient::Send(std::string message) {
 			return false;
 		} else {
 			this->sending_message = message;
-			std::cout << "发送数据成功, 数据内容" + this->sending_message << std::endl;
+			// TODO：不想打印这些发送的数据内容
+			// std::cout << "发送数据成功, 数据内容" + this->sending_message << std::endl;
 		}
 	}
 
